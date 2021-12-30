@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSLoggerLib", "CSLoggerLib\CSLoggerLib.csproj", "{7153BEE5-C197-4075-BD79-F35E874722AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerTesterConsole", "LoggerTesterConsole\LoggerTesterConsole.csproj", "{9CDE5B1A-B3AC-44E7-9CF6-7CD8AF937E58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7153BEE5-C197-4075-BD79-F35E874722AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7153BEE5-C197-4075-BD79-F35E874722AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7153BEE5-C197-4075-BD79-F35E874722AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7153BEE5-C197-4075-BD79-F35E874722AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CDE5B1A-B3AC-44E7-9CF6-7CD8AF937E58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CDE5B1A-B3AC-44E7-9CF6-7CD8AF937E58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CDE5B1A-B3AC-44E7-9CF6-7CD8AF937E58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CDE5B1A-B3AC-44E7-9CF6-7CD8AF937E58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {78EABCE6-CDC4-4DC7-95E9-D46EC1D66D93}
+	EndGlobalSection
+EndGlobal
