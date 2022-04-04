@@ -2,6 +2,7 @@
 {
     public enum PublisherTypes
     {
-        File = 0
+        Console = 0,
+        File = 1
     }
 }

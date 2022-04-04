@@ -8,11 +8,14 @@ namespace Commons.Publishers
     {
         public static IPublisher<T> Create<T>(PublisherTypes t, IDictionary<string, object> config, IFormatter<T> formatter)
         {
-            switch(t)
-            {
+            switch (t)
+            {                  
                 case PublisherTypes.File:
-                default:
                     return new FilePublisher<T>(config, formatter);
+                
+                case PublisherTypes.Console:
+                default:
+                    return new ConsolePublisher<T>(config, formatter);
             }
         }
     }
