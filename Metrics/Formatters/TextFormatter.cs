@@ -18,7 +18,7 @@ namespace Metrics.Formatters
 
         static string FormatTime(IMetric input)
         {
-            return input.Timespam.ToString("yyyyMMdd HHmmss.fffffff K");
+            return input.Timespam.ToString("yyyyMMdd HHmmss.fffffffK");
         }
 
         static string FormatTags(IMetric input)

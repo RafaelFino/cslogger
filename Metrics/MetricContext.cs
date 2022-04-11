@@ -21,6 +21,7 @@ namespace Metrics
 
         public MetricContext(string contextNamespace, IEnumerable<string> tags = null)
         {
+            _clock.Start();
             _namespace = contextNamespace;
             _tags = tags;
         }        
@@ -49,7 +50,7 @@ namespace Metrics
             MetricReceiver.GetInstance().Send(_data);
             _clock.Stop();
             MetricReceiver.GetInstance().Send(new Metric() {
-                Namespace = _namespace,
+                Namespace = string.Format($"{_namespace}.context"),
                 Timespam = _start,
                 Value = _clock.ElapsedMilliseconds,
                 Type = MetricType.Duration,

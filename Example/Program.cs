@@ -51,8 +51,8 @@ namespace Example
         {
             var metricConfig = new MetricReceiverConfig();
             var textPublisher = PublisherFactory.Create(
-                        PublisherTypes.Console,
-                        ConsolePublisher<IMetric>.CreateDefaultConfig("metric-text"),
+                        PublisherTypes.File,
+                        FilePublisher<IMetric>.CreateDefaultConfig("metric-text"),
                         new Metrics.Formatters.TextFormatter());
 
             var jsonPublisher = PublisherFactory.Create(
@@ -70,7 +70,7 @@ namespace Example
         static void RunTest()
         {
             var logger = MessageLogger.GetInstance();
-            int qtd = 100;
+            int qtd = 5000;
             
             using(var metrics = new MetricContext("Text"))
             {
