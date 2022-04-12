@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Design;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using System.Diagnostics;
 using System;
 using System.Collections.Generic;
@@ -71,28 +72,57 @@ namespace Example
         static void RunTest()
         {
             var logger = MessageLogger.GetInstance();
-            decimal qtd = 5000;
+            decimal qtd = 500;
+            decimal count = 0;
             
             using(var metrics = new MetricContext("example.test"))
             {
                 var timer = new Stopwatch();
                 timer.Start();
 
-                logger.Info("Teste - Info");
+                logger.Info("Test Start - Info");
 
-                for (int i = 0; i < qtd; i++)
+                var asyncTaskDebug = Task.Factory.StartNew(() =>
                 {
-                    logger.Debug($"Teste - debug {i}");
+                    for (int i = 0; i < qtd; i++)
+                    {
+                        logger.Debug($"Async with sleep - debug {i}");
+                        Thread.Sleep(1);
+                    }
+                });
+
+                var asyncTaskInfo = Task.Factory.StartNew(() =>
+                {
+                    for (int i = 0; i < qtd; i++)
+                    {
+                        logger.Info($"Async - info {i}");
+                        Thread.Sleep(1);
+                    }
+                });                
+
+                while(!asyncTaskDebug.IsCompleted || !asyncTaskInfo.IsCompleted)
+                {
+                    for (int i = 0; i < qtd/10; i++)
+                    {
+                        logger.Debug($"Sync - debug {i}/{count}");
+                        count++;
+                    }
+                    Thread.Sleep(1);
                 }
+
+                asyncTaskDebug.Wait();
+                asyncTaskInfo.Wait();
 
                 timer.Stop();
 
-                metrics.Add("average-time", timer.ElapsedMilliseconds/qtd, MetricType.Duration);
-                metrics.Add("tps", qtd/(timer.ElapsedMilliseconds*1000), MetricType.Gauge);
+                metrics.Add("average-time", timer.ElapsedMilliseconds/(count+qtd*2), MetricType.Duration);
+                metrics.Add("tps", (count+qtd*2)/(timer.ElapsedMilliseconds*1000), MetricType.Gauge);
 
-                metrics.Add("processes", qtd);
+                metrics.Add("processes-sync", count);
+                metrics.Add("processes-sync", qtd*2);
+                metrics.Add("processes-total", count+qtd*2);
 
-                logger.Info("Fim! - Info");            
+                logger.Info("Test Finish - Info");
             }
         }
     }
