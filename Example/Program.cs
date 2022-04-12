@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.ComponentModel.Design;
+using System.Diagnostics;
+using System;
 using System.Collections.Generic;
 using Commons.Enum;
 using Commons.Interfaces;
@@ -27,7 +29,6 @@ namespace Example
 
         static void InitializeLog()
         {
-
             MessageLogger.Initialize(new LoggerConfig() 
                 { 
                     Level = LogLevel.Debug 
@@ -70,16 +71,24 @@ namespace Example
         static void RunTest()
         {
             var logger = MessageLogger.GetInstance();
-            int qtd = 5000;
+            decimal qtd = 5000;
             
-            using(var metrics = new MetricContext("Text"))
+            using(var metrics = new MetricContext("example.test"))
             {
+                var timer = new Stopwatch();
+                timer.Start();
+
                 logger.Info("Teste - Info");
 
                 for (int i = 0; i < qtd; i++)
                 {
                     logger.Debug($"Teste - debug {i}");
                 }
+
+                timer.Stop();
+
+                metrics.Add("average-time", timer.ElapsedMilliseconds/qtd, MetricType.Duration);
+                metrics.Add("tps", qtd/(timer.ElapsedMilliseconds*1000), MetricType.Gauge);
 
                 metrics.Add("processes", qtd);
 

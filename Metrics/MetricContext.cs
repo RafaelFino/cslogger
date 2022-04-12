@@ -50,7 +50,7 @@ namespace Metrics
             MetricReceiver.GetInstance().Send(_data);
             _clock.Stop();
             MetricReceiver.GetInstance().Send(new Metric() {
-                Namespace = string.Format($"{_namespace}.context"),
+                Namespace = string.Format($"{_namespace}.context-elapsedtime"),
                 Timespam = _start,
                 Value = _clock.ElapsedMilliseconds,
                 Type = MetricType.Duration,
