@@ -21,7 +21,6 @@ namespace Commons.Publishers
         public const string TagPath = "path";
         public const string TagFilename = "filename";
         public const string TagExtensionFilename = "filename-extension";
-        public const string TagBuffeSize = "buffer-size";
         public const string TagFlushInterval = "flush-interval";
 
         public static IDictionary<string, object> CreateDefaultConfig(string name)

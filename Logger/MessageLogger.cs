@@ -62,59 +62,67 @@ namespace Logger
         }
 
         #region Send message methods
+        protected void Publish(ILogMessage message)
+        {
+            if (_levels.Contains(message.Level))
+            {
+                Send(message);
+            }
+        }
+
         public void Debug(ILogMessage message)
         {
             message.Level = LogLevel.Debug;
-            Send(message);
+            Publish(message);
         }
 
         public void Debug(string message)
         {
-            Send(new LogMessage(LogLevel.Debug, message));
+            Publish(new LogMessage(LogLevel.Debug, message));
         }
 
         public void Error(ILogMessage message)
         {
             message.Level = LogLevel.Error;
-            Send(message);
+            Publish(message);
         }
 
         public void Error(string message)
         {
-            Send(new LogMessage(LogLevel.Error, message));
+            Publish(new LogMessage(LogLevel.Error, message));
         }
 
         public void Fatal(ILogMessage message)
         {
             message.Level = LogLevel.Fatal;
-            Send(message);
+            Publish(message);
         }
 
         public void Fatal(string message)
         {
-            Send(new LogMessage(LogLevel.Fatal, message));
+            Publish(new LogMessage(LogLevel.Fatal, message));
         }
 
         public void Info(ILogMessage message)
         {
             message.Level = LogLevel.Info;
-            Send(message);
+            Publish(message);
         }
 
         public void Info(string message)
         {
-            Send(new LogMessage(LogLevel.Info, message));
+            Publish(new LogMessage(LogLevel.Info, message));
         }
 
         public void Warn(ILogMessage message)
         {
             message.Level = LogLevel.Warn;
-            Send(message);
+            Publish(message);
         }
 
         public void Warn(string message)
         {
-            Send(new LogMessage(LogLevel.Warn, message));
+            Publish(new LogMessage(LogLevel.Warn, message));
         }
         #endregion
     }

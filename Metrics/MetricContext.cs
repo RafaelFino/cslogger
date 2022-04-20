@@ -52,7 +52,7 @@ namespace Metrics
             MetricReceiver.GetInstance().Send(new Metric() {
                 Namespace = string.Format($"{_namespace}.context-elapsedtime"),
                 Timespam = _start,
-                Value = _clock.ElapsedMilliseconds,
+                Value = Convert.ToDecimal(_clock.Elapsed.TotalMilliseconds),
                 Type = MetricType.Duration,
                 Tags = _tags
             });

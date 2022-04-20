@@ -21,9 +21,12 @@ namespace Example
 
             using(var metricReceiver = MetricReceiver.GetInstance())
             {
-                using(var logger = MessageLogger.GetInstance())
+                using(var m = new MetricContext("global-process"))
                 {
-                    RunTest();
+                    using(var logger = MessageLogger.GetInstance())
+                    {
+                        RunTest();
+                    }
                 }
             }
         }
@@ -95,7 +98,7 @@ namespace Example
                 {
                     for (int i = 0; i < qtd; i++)
                     {
-                        logger.Info($"Async - info {i}");
+                        logger.Info($"Async with sleep - info {i}");
                         Thread.Sleep(1);
                     }
                 });                
@@ -115,11 +118,11 @@ namespace Example
 
                 timer.Stop();
 
-                metrics.Add("average-time", timer.ElapsedMilliseconds/(count+qtd*2), MetricType.Duration);
-                metrics.Add("tps", (count+qtd*2)/(timer.ElapsedMilliseconds*1000), MetricType.Gauge);
+                metrics.Add("average-time", Convert.ToDecimal(timer.Elapsed.TotalMilliseconds)/(count+qtd*2), MetricType.Duration);
+                metrics.Add("tps", (count+qtd*2)/(Convert.ToDecimal(timer.Elapsed.TotalMilliseconds*1000)), MetricType.Gauge);
 
                 metrics.Add("processes-sync", count);
-                metrics.Add("processes-sync", qtd*2);
+                metrics.Add("processes-async", qtd*2);
                 metrics.Add("processes-total", count+qtd*2);
 
                 logger.Info("Test Finish - Info");
