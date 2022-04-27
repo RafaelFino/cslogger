@@ -38,11 +38,11 @@ namespace Commons.Entities
 
             if (Details != null && Details.Count > 0)
             {
-                ret = string.Format($"{When}\t{level}\t{Message}\t{string.Join("\t", Details.Select((k, v) => string.Format($"{k}:{v} ")))}");
+                ret = string.Format($"{When} {level} {Message} \t{string.Join("\t", Details.Select((k, v) => string.Format($"{k}:{v} ")))}");
             } 
             else
             {
-                ret = string.Format($"{When}\t{level}\t{Message}");
+                ret = string.Format($"{When} {level} {Message}");
             }
 
             if( Ex != null )

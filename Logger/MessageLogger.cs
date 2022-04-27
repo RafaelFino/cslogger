@@ -92,6 +92,15 @@ namespace Logger
             Publish(new LogMessage(LogLevel.Error, message));
         }
 
+        public void Error(string message, Exception ex)
+        {
+            var msg = new LogMessage(LogLevel.Error, message)
+            {
+                Ex = ex
+            };
+            Publish(msg);
+        }
+
         public void Fatal(ILogMessage message)
         {
             message.Level = LogLevel.Fatal;
@@ -101,6 +110,15 @@ namespace Logger
         public void Fatal(string message)
         {
             Publish(new LogMessage(LogLevel.Fatal, message));
+        }
+
+        public void Fatal(string message, Exception ex)
+        {
+            var msg = new LogMessage(LogLevel.Fatal, message)
+            {
+                Ex = ex
+            };
+            Publish(msg);
         }
 
         public void Info(ILogMessage message)
@@ -124,6 +142,7 @@ namespace Logger
         {
             Publish(new LogMessage(LogLevel.Warn, message));
         }
+              
         #endregion
     }
 }

@@ -30,7 +30,7 @@ namespace Commons.Publishers
                 { TagPath, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs") },
                 { TagFilename, string.Format($"{AppDomain.CurrentDomain.FriendlyName}-{name}") },
                 { TagExtensionFilename, "log" },
-                { TagFlushInterval, 1000 }
+                { TagFlushInterval, 2000 }
             };
 
             return ret;

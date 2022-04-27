@@ -1,29 +1,29 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System;
-using System.Collections.Generic;
+﻿using Commons.Entities;
 using Commons.Enum;
 using Commons.Interfaces;
 using Commons.Publishers;
-using Commons.Entities;
 using Logger;
 using Metrics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Example
-{    
+{
     internal class Program
     {
         static void Main(string[] args)
-        {                                    
+        {
             InitializeLog();
             InitializeMetricReceiver();
 
-            using(var metricReceiver = MetricReceiver.GetInstance())
+            using (var metricReceiver = MetricReceiver.GetInstance())
             {
-                using(var m = new MetricContext("global-process"))
+                using (var m = new MetricContext("global-process"))
                 {
-                    using(var logger = MessageLogger.GetInstance())
+                    using (var logger = MessageLogger.GetInstance())
                     {
                         RunTest();
                     }
@@ -33,10 +33,10 @@ namespace Example
 
         static void InitializeLog()
         {
-            MessageLogger.Initialize(new LoggerConfig() 
-                { 
-                    Level = LogLevel.Debug 
-                }, 
+            MessageLogger.Initialize(new LoggerConfig()
+            {
+                Level = LogLevel.Debug
+            },
                 new List<IPublisher<ILogMessage>>
                 {
                     PublisherFactory.Create(
@@ -65,20 +65,20 @@ namespace Example
                         FilePublisher<IMetric>.CreateDefaultConfig("metric-json"),
                         new Metrics.Formatters.JsonFormatter());
 
-            var publishers = new List<IPublisher<IMetric>>(); 
+            var publishers = new List<IPublisher<IMetric>>();
             publishers.Add(textPublisher);
-            publishers.Add(jsonPublisher);            
-            
-            MetricReceiver.Initialize(metricConfig, publishers); 
-        }        
+            publishers.Add(jsonPublisher);
+
+            MetricReceiver.Initialize(metricConfig, publishers);
+        }
 
         static void RunTest()
         {
             var logger = MessageLogger.GetInstance();
             decimal qtd = 500;
             decimal count = 0;
-            
-            using(var metrics = new MetricContext("example.test"))
+
+            using (var metrics = new MetricContext("example.test"))
             {
                 var timer = new Stopwatch();
                 timer.Start();
@@ -101,11 +101,11 @@ namespace Example
                         logger.Info($"Async with sleep - info {i}");
                         Thread.Sleep(1);
                     }
-                });                
+                });
 
-                while(!asyncTaskDebug.IsCompleted || !asyncTaskInfo.IsCompleted)
+                while (!asyncTaskDebug.IsCompleted || !asyncTaskInfo.IsCompleted)
                 {
-                    for (int i = 0; i < qtd/10; i++)
+                    for (int i = 0; i < qtd / 10; i++)
                     {
                         logger.Debug($"Sync - debug {i}/{count}");
                         count++;
@@ -118,12 +118,12 @@ namespace Example
 
                 timer.Stop();
 
-                metrics.Add("average-time", Convert.ToDecimal(timer.Elapsed.TotalMilliseconds)/(count+qtd*2), MetricType.Duration);
-                metrics.Add("tps", (count+qtd*2)/(Convert.ToDecimal(timer.Elapsed.TotalMilliseconds*1000)), MetricType.Gauge);
+                metrics.Add("average-time", Convert.ToDecimal(timer.Elapsed.TotalMilliseconds) / (count + qtd * 2), MetricType.Duration);
+                metrics.Add("tps", (count + qtd * 2) / (Convert.ToDecimal(timer.Elapsed.TotalMilliseconds * 1000)), MetricType.Gauge);
 
                 metrics.Add("processes-sync", count);
-                metrics.Add("processes-async", qtd*2);
-                metrics.Add("processes-total", count+qtd*2);
+                metrics.Add("processes-async", qtd * 2);
+                metrics.Add("processes-total", count + qtd * 2);
 
                 logger.Info("Test Finish - Info");
             }

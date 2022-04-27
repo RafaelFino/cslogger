@@ -16,7 +16,7 @@ namespace Commons.Publishers
 
         public static IDictionary<string, object> CreateDefaultConfig(string name)
         {
-            Console.WriteLine($"Creating to {name}");
+            Console.WriteLine($"[{name}] Creating default config");
             return new Dictionary<string, object>()
             {
                 { TagName, name } 
@@ -32,25 +32,25 @@ namespace Commons.Publishers
 
         public void Publish(T message)
         {
-            Console.WriteLine(_formatter.Format(message));
+            Console.WriteLine($"[{_name}] {_formatter.Format(message)}");
         }
 
         public void Publish(IEnumerable<T> messages)
         {
             foreach (var message in messages)
             {
-                Console.WriteLine($"[{_name}] {_formatter.Format(message)}");    
+                Console.WriteLine($"[{_name}] {_formatter.Format(message)}");
             }            
         }        
 
         public void Start()
         {
-            Console.WriteLine($"###  [{_name}] Starting console publisher                                                             ###");
+            Console.WriteLine($"[{_name}] Start console publisher");
         }
 
         public void Stop()
         {
-            Console.WriteLine($"###  [{_name}] Stopping console publisher                                                             ###");
+            Console.WriteLine($"[{_name}] Stop console publisher");
         }
     }
 }

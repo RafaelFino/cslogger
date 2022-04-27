@@ -1,4 +1,6 @@
-﻿namespace Commons.Interfaces
+﻿using System;
+
+namespace Commons.Interfaces
 {
     public interface ILogger : IReceiver<ILogMessage>
     {
@@ -12,9 +14,13 @@
         void Warn(ILogMessage message);
 
         void Error(string message);
+
+        void Error(string message, Exception ex);
         void Error(ILogMessage message);
 
         void Fatal(string message);
+
+        void Fatal(string message, Exception ex);
         void Fatal(ILogMessage message);
     }
 }
