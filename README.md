@@ -9,3 +9,6 @@ Uma Lib criada com fins educacionais, para evidênciar como podemos lidar com pr
   - A lib deve pertir ser totalmente configurável, ou em sua inicialização ou via um arquivo de configuração (json)
   - A lib deve ser capaz de receber requisições paralelas e ser "lock Free", sem perder dados por concorrência
   - A lib deve ser compatível com Linux e Windows
+
+  # Bonus
+   - Criar um projeto que use paralelismos e concorrências
